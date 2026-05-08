@@ -124,32 +124,115 @@ body:not(.in-game) #clock {
 @media (max-width:480px){ .pill.gold{ --gold-size:24px; --gold-cols:8; --gold-rows:2 } }
 
 /* ===== Welcome / Landing ===== */
-#landing{ position:fixed; inset:0; display:flex; flex-direction:column; gap:22px; align-items:center; justify-content:center; background:url("image/background2.png") center/cover no-repeat fixed !important; z-index:20000; transition:opacity .3s ease }
+#landing{
+  position:fixed; inset:0; display:flex; flex-direction:column;
+  align-items:center; justify-content:center;
+  background:url("image/background2.png") center/cover no-repeat fixed !important;
+  z-index:20000; transition:opacity .3s ease;
+  overflow:hidden;
+}
 #landing.hide{ opacity:0; pointer-events:none; visibility:hidden }
 #landing .brand{ width:min(92vw,1100px) }
 #landing .brand img{ width:100%; height:auto; display:block; filter:drop-shadow(0 10px 30px rgba(0,0,0,.6)) }
-#welcome{ position:fixed; inset:0; background:url("image/welcome.png") center/cover no-repeat fixed; display:flex; flex-direction:column; align-items:center; justify-content:center; gap:24px; z-index:25000; transition:opacity .3s ease; }
+
+#welcome{
+  position:fixed; inset:0;
+  background:url("image/welcome.png") center/cover no-repeat fixed;
+  display:flex; flex-direction:column;
+  align-items:center; justify-content:center;
+  gap:24px; z-index:25000;
+  transition:opacity .3s ease;
+  overflow:hidden;
+}
 #welcome.hide{ opacity:0; pointer-events:none; visibility:hidden }
-#welcome #enterBtn{ padding:12px 28px; font-size:clamp(22px,4vw,36px); font-weight:1000; letter-spacing:.2px; border:0; border-radius:16px; color:#fff; background:rgba(0,0,0,.55); box-shadow:0 10px 28px rgba(0,0,0,.35); cursor:pointer; backdrop-filter:blur(6px); border:1px solid rgba(255,255,255,.18) }
 
-#welcome .brand{ width:min(90vw,1000px); 
-        margin-bottom:100px; 
-        display:flex; 
-        justify-content:center 
+/* ===== welcome-content: กรอบ full 100% ===== */
+#welcome .welcome-content{
+  position:relative;
+  width:100%; height:100%;
+  display:flex; align-items:center; justify-content:center;
 }
 
-#welcome .brand 
-        img{ width:130%; 
-        height:auto; display:block; 
-        animation:pulse 3s infinite ease-in-out; 
-        filter:drop-shadow(0 6px 18px rgba(0,0,0,.45)) 
+/* ===== Responsive Scale Group: welcome ===== */
+#welcome .welcome-inner{
+  position:relative;
+  display:flex; flex-direction:column;
+  align-items:center; justify-content:center;
+  gap:clamp(10px,2dvh,24px);
+  transform:scale(var(--welcome-scale,1));
+  transform-origin:center center;
+  will-change:transform;
 }
 
-#welcome .welcome-content{ 
-       display:flex; 
-       flex-direction:column; 
-       align-items:center; gap:0; 
-       margin-top:100px 
+/* ===== Responsive Scale Group: landing ===== */
+#landing .landing-inner{
+  display:flex; flex-direction:column;
+  align-items:center; justify-content:center;
+  gap:clamp(12px,2.4dvh,26px);
+  transform:scale(var(--landing-scale,1));
+  transform-origin:center center;
+  will-change:transform;
+}
+
+/* ===== Banner welcome ===== */
+#welcome .brand{
+  width:min(90vw,1000px);
+  margin-bottom:100px;
+  display:flex; justify-content:center;
+}
+#welcome .brand img{
+  width:min(150%,1400px);
+  max-width:150%;
+  height:auto; max-height:75dvh;
+  object-fit:contain; display:block;
+  animation:pulse 3s infinite ease-in-out;
+  filter:drop-shadow(0 6px 18px rgba(0,0,0,.45));
+}
+
+/* ===== enterBtn: absolute ล่างกลาง ===== */
+#welcome #enterBtn{
+  position:absolute;
+  left:50%; bottom:12dvh;
+  transform:translateX(-50%);
+  padding:12px 28px;
+  font-size:clamp(22px,4vw,36px);
+  font-weight:1000; letter-spacing:.2px;
+  border:0; border-radius:16px;
+  color:#fff; background:rgba(0,0,0,.55);
+  box-shadow:0 10px 28px rgba(0,0,0,.35);
+  cursor:pointer; backdrop-filter:blur(6px);
+  border:1px solid rgba(255,255,255,.18);
+  transition:transform .15s ease, filter .15s ease, box-shadow .15s ease;
+  white-space:nowrap;
+}
+#welcome #enterBtn:hover{
+  transform:translateX(-50%) scale(1.08);
+  filter:brightness(1.12);
+  box-shadow:0 16px 38px rgba(0,0,0,.45), 0 0 20px rgba(255,255,255,.18);
+}
+#welcome #enterBtn:active{
+  transform:translateX(-50%) scale(0.95);
+  filter:brightness(.95);
+}
+
+/* ===== levelBtn responsive ===== */
+.level-menu{ display:flex; flex-direction:column; gap:14px; width:min(92vw,640px) }
+.levelBtn{
+  width:82%; max-width:520px; min-width:280px; margin:0 auto;
+  padding:10px 16px;
+  font-size:clamp(20px,4vw,34px); font-weight:1000; letter-spacing:.2px;
+  border:0; border-radius:14px;
+  color:#fff; background:rgba(0,0,0,.55);
+  box-shadow:0 10px 28px rgba(0,0,0,.35);
+  cursor:pointer; text-align:center;
+  border:1px solid rgba(255,255,255,.18);
+  backdrop-filter:blur(6px);
+  transition:transform .15s ease, filter .15s ease, box-shadow .15s ease;
+}
+.levelBtn:hover{
+  transform:scale(1.08);
+  filter:brightness(1.12);
+  box-shadow:0 16px 38px rgba(0,0,0,.45), 0 0 20px rgba(255,255,255,.18);
 }
 @keyframes pulse{ 0%,100%{transform:scale(1);opacity:1} 50%{transform:scale(1.04);opacity:.9} }
 .level-menu{ display:flex; flex-direction:column; gap:14px; width:min(92vw,640px) }
@@ -677,23 +760,28 @@ body::before{ content:""; position:fixed; top:0; right:0; width:var(--corner2-im
   <div id="qStrip" class="qstrip" aria-label="ภาพคำถาม"></div>
 </div>
 
-<!-- ===== Welcome (หน้าสุด) ===== -->
+<!-- ===== Welcome ===== -->
 <div id="welcome" role="dialog" aria-modal="true">
   <div class="welcome-content">
-    <div class="brand"><img src="image/banner2.png" alt="Banner"></div>
-    <button id="enterBtn">เข้าสู่เกม</button>
+    <div class="welcome-inner">
+      <div class="brand"><img src="image/banner2.png" alt="Banner"></div>
+    </div>
   </div>
+  <button id="enterBtn">เข้าสู่เกม</button>
 </div>
 
 <!-- ===== Landing ===== -->
 <div id="landing" role="dialog" aria-modal="true" class="hide">
-  <div class="brand"><img src="image/banner2.png" alt="Banner"></div>
-<div class="level-menu">
+  <div class="landing-inner">
+    <div class="brand"><img src="image/banner2.png" alt="Banner"></div>
+    <div class="level-menu">
   <button class="levelBtn" data-level="1">ด่านที่ 1 (พยัญชนะ+สระ)</button>
   <button class="levelBtn" data-level="2">ด่านที่ 2 (มีวรรณยุกต์)</button>
   <button class="levelBtn" id="guideBtn">กติกาการเล่น 📖</button>
-   </div>
+    </div>
+  </div>
 </div>
+
 
 <!-- ===== ภารกิจ / หน้าเริ่ม ===== -->
 <div id="startScreen">
@@ -825,6 +913,47 @@ body::before{ content:""; position:fixed; top:0; right:0; width:var(--corner2-im
 (()=>{
 // กันรอหลอน ๆ ถ้ายังไม่พรีโหลด
 window.__ALL_IMAGES_READY__ = false;
+
+/* ===== Auto Responsive Scale: welcome & landing ===== */
+function updateWelcomeScale(){
+  const wrap = document.querySelector('#welcome .welcome-inner');
+  if(!wrap) return;
+  wrap.style.setProperty('--welcome-scale', 1);
+  const rect = wrap.getBoundingClientRect();
+  const maxH = window.innerHeight * 0.95;
+  if(rect.height > maxH){
+    wrap.style.setProperty('--welcome-scale', maxH / rect.height);
+  }
+}
+
+function updateLandingScale(){
+  const wrap = document.querySelector('#landing .landing-inner');
+  if(!wrap) return;
+  wrap.style.setProperty('--landing-scale', 1);
+  const rect = wrap.getBoundingClientRect();
+  const maxH = window.innerHeight * 0.95;
+  if(rect.height > maxH){
+    wrap.style.setProperty('--landing-scale', maxH / rect.height);
+  }
+}
+
+window.addEventListener('load', ()=>{ updateWelcomeScale(); updateLandingScale(); });
+window.addEventListener('orientationchange', ()=>{ updateWelcomeScale(); updateLandingScale(); });
+setTimeout(()=>{ updateWelcomeScale(); updateLandingScale(); }, 600);
+
+if('ResizeObserver' in window){
+  const landingInner = document.querySelector('#landing .landing-inner');
+  if(landingInner){
+    new ResizeObserver(()=>requestAnimationFrame(updateLandingScale)).observe(landingInner);
+  }
+  const welcomeInner = document.querySelector('#welcome .welcome-inner');
+  if(welcomeInner){
+    new ResizeObserver(()=>requestAnimationFrame(updateWelcomeScale)).observe(welcomeInner);
+  }
+} else {
+  window.addEventListener('resize', ()=>{ updateWelcomeScale(); updateLandingScale(); });
+}
+/* ===== End Auto Responsive Scale ===== */
 
 
   /* ---------- DOM ---------- */
@@ -3362,13 +3491,6 @@ function getMissionTitle(lv){
 
 </body>
 </html>
-
-
-
-
-
-
-
 
 
 
