@@ -1786,12 +1786,10 @@ function waitForBothTransitions(els, timeoutMs=600){
   clearInterval(roundTimer); stopTimebar();
   // 🔇 ไม่เล่นเสียงที่นี่แล้ว — เล่นไปแล้วใน tryAnswer() ตามผลลัพธ์ถูก/ผิด
 
-
-  // อัปเดตคะแนนก่อน แล้วทำเอฟเฟกต์ตัวเลขลอย
 if (ok) {
   score += 1;     // ตอบถูก +1
 } else {
-  score -= 1;     // ตอบผิด -1
+  score = Math.max(0, score - 1); // ห้ามต่ำกว่า 0
 }
 updateHUD();
 flyScoreForEl(pickedElOrNull || null, ok); // แสดง +1/-1 ตรงกลางจอเหมือนเดิม
